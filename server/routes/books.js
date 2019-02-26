@@ -11,7 +11,10 @@ router.get('/', (req, res, next) => {
   // find all books in the books collection
   bookModel.find( (err, books) => {
     if (err) {
-      return console.error(err);
+     // return console.error(err);
+     // console.error('There was an error', err);
+     //return res.json("there is an error");
+      res.send(err);
     }
     else {
       // res.render('books/index', {
@@ -22,6 +25,9 @@ router.get('/', (req, res, next) => {
     }
   });
 
+
+
+  
 });
 
 //  GET the Book Details page in order to add a new Book
@@ -32,11 +38,34 @@ router.get('/add', (req, res, next) => {
   })
 })
 
+// Model Reference
+// Title: String,
+// Description: String,
+// Price: Number,
+// Author: String,
+// Genre: String
 
 // POST process the Book Details page and create a new Book - CREATE
 router.post('/add', (req, res, next) => {
+console.log(req.body);
+  // CREATE THE OBJECT TO SAVE THE VALUE FROM THE REQUEST
+  let object = new bookModel({
+    "Title" : req.body.Title,
+    "Price" : req.body.Price,
+    "Author" :req.body.Author,
+    "Genre" : req.body.Genre
+  })
+
+  // ADD API
+  bookModel.create(object, (err, bookModel) => {
+    if(err){
+      res.send(err);
+    }else{
+     res.send(200)}
+  })
   
 });
+
 
 // GET the Book Details page in order to edit an existing Book
 router.get('/:id', (req, res, next) => {
