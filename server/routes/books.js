@@ -17,11 +17,11 @@ router.get('/', (req, res, next) => {
       res.send(err);
     }
     else {
-      // res.render('books/index', {
-      //   title: 'Books',
-      //   books: books
-      // });
-    res.json(books);
+      res.render('books/index', {
+        title: 'Books',
+        books: books
+      });
+    //res.json(books);
     }
   });
 
@@ -68,12 +68,22 @@ console.log(req.body);
 
 
 // GET the Book Details page in order to edit an existing Book
-router.get('/:id', (req, res, next) => {
+router.get('/get/:id', (req, res, next) => {
+  //STORE ID TO FETCH RECORD FROM THE DB
+  let id =req.params.id;
 
-    /*****************
-     * ADD CODE HERE *
-     *****************/
-});
+  bookModel.findById(id, (err, bookObject) => {
+    if(err){
+      res.send(err);
+    }else{
+       res.json(bookObject)
+        // res.render('books/details', {
+        // title: 'Books',
+        // books: bookObject
+      //});
+    }
+  })
+})
 
 // POST - process the information passed from the details form and update the document
 router.post('/:id', (req, res, next) => {
