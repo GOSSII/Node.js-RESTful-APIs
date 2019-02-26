@@ -67,7 +67,7 @@ console.log(req.body);
 });
 
 
-// GET the Book Details page in order to edit an existing Book
+// GET the Book Details By Id
 router.get('/get/:id', (req, res, next) => {
   //STORE ID TO FETCH RECORD FROM THE DB
   let id =req.params.id;
@@ -85,22 +85,65 @@ router.get('/get/:id', (req, res, next) => {
   })
 })
 
+// GET the Book Details page in order to edit an existing Book
+router.get('/edit/:id', (req, res, next) => {
+  //STORE ID TO FETCH RECORD FROM THE DB
+  let id =req.params.id;
+
+  bookModel.findById(id, (err, bookObject) => {
+    if(err){
+      res.send(err);
+    }else{
+       //res.json(bookObject)
+        res.render('books/details', {
+        title: 'Books',
+        books: bookObject
+      });
+    }
+  })
+})
+
 // POST - process the information passed from the details form and update the document
-router.post('/:id', (req, res, next) => {
+router.post('edit/:id', (req, res, next) =>{
+  // STORE ID
+  let id = req.params.id;
 
-    /*****************
-     * ADD CODE HERE *
-     *****************/
 
-});
+  console.log("Id => ",id);
+  // STORE FORM VALUES IN OBJECT
+  // let updateBookObject = bookModel({
+  //   "_id" : id,
+  //   "Title" : req.body.Title,
+  //   "Price" : req.body.Price,
+  //   "Author" :req.body.Author,
+  //   "Genre" : req.body.Genre
+  // })
+
+  // console.log("Object => "+ updateBookObject);
+
+  // // UPDATE FUNCTION
+  // bookModel.update({_id : id }, updateBookObject, (err) => {
+  //   if(err){
+  //     console.log(err);
+  //     res.send(err);
+  //   }else{
+  //     res.redirect('/books');
+  //    //res.send(200)}
+  //   }
+  //   })
+})
 
 // GET - process the delete by user id
 router.get('/delete/:id', (req, res, next) => {
+  let id = req.params.id;
+  // console.log("Del ID => " +id);
 
-    /*****************
-     * ADD CODE HERE *
-     *****************/
-});
-
+  bookModel.remove({_id : id}, (err) => {
+      if(err){res.send(err);
+      }else{
+          res.send(200);
+      }
+  })
+})
 
 module.exports = router;

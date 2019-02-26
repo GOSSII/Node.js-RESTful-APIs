@@ -20,6 +20,7 @@
                   <th class="text-center">Genre</th>
                   <th class="text-center"></th>
                   <th class="text-center"></th>
+                  <th class="text-center"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,15 +33,19 @@
                   <td class="text-center"><%= books[count].Genre %></td>
 
                   <td class="text-center">
-                    <a href="books/get/<%= books[count].id %>" class="btn btn-primary">
+                    <a href="/books/get/<%= books[count].id %>" class="btn btn-info">
                       <i class="fas fa-pencil-alt"></i> Details
                   </a>
                   </td>
-
                   <td class="text-center">
-                    <!-- ------------------------ -->
-                    <!-- ADD the DELETE BUTTON HERE -->
-                    <!-- ------------------------ -->
+                    <a href="/books/edit/<%= books[count].id %>" class="btn btn-success">
+                      <i class="fas fa-pencil-alt"></i> Edit  
+                  </a>
+                  </td>
+                  <td class="text-center">
+                    <a href="books/delete/<%= books[count].id %>" class="btn btn-danger">
+                      <i class="fas fa-pencil-alt"></i> Delete  
+                  </a>
                   </td>
                 </tr>
                 <% } %>
